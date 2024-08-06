@@ -39,7 +39,7 @@ for fn in audio_files:
       print("%s: %.2f dB (max %.2f)" % (fn, audio.dBFS, audio.max_dBFS))
       if audio.dBFS < target_dBFS:
         print("%s: Low level. Increasing by %f to %f" % (fn, target_dBFS - audio.dBFS, target_dBFS))
-        subprocess.call(['ffmpeg', '-y', '-i', src_dir + "/" + 'normalized/%s' % fn, '-af', 'volume=%fdB' % (target_dBFS - audio.dBFS), src_dir + "/" + 'normalized/boosted/%s' % fn])
+        subprocess.call(['ffmpeg', '-y', '-i', src_dir + "/" + 'normalized/%s' % fn, '-af', 'volume=%fdB,silenceremove=2:0:-50dB' % (target_dBFS - audio.dBFS), src_dir + "/" + 'normalized/boosted/%s' % fn])
       elif audio.dBFS > target_dBFS:
         print("%s: High level" % fn)
 
